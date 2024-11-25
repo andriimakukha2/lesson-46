@@ -1,0 +1,50 @@
+.about-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  color: #333;
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #4a90e2;
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-top: 20px;
+    color: #333;
+  }
+
+  p {
+    line-height: 1.6;
+    margin: 10px 0;
+  }
+
+  ul {
+    margin: 10px 0;
+    padding-left: 20px;
+
+    li {
+      margin: 5px 0;
+    }
+  }
+
+  .about-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #357ab8;
+    }
+  }
+}

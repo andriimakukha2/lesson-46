@@ -1,0 +1,53 @@
+@import 'variables';
+@import "mixins";
+
+.cars {
+  padding: 20px;
+  background-color: #1a1a1a;
+  color: $text-color;
+}
+
+.car-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.car-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 10px;
+  padding: 15px;
+  text-align: center;
+  @include transition('transform 0.2s, box-shadow 0.2s');
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    opacity: 0; // Сховати поки завантажується
+    @include transition(opacity 0.5s); // Анімація появи
+  }
+
+  img.loaded {
+    opacity: 1; // Показати після завантаження
+  }
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.car-card h2 {
+  margin: 10px 0;
+  font-size: 1.5rem;
+}
+
+.car-card p {
+  margin: 10px;
+  font-size: 1rem;
+}
