@@ -1,4 +1,3 @@
-// src/redux/reducers/carsSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import teslaImg from "./images/tesla-model-s.jpg";
@@ -20,13 +19,21 @@ import mazdaImg from "./images/mazda-mx5.jpg";
 import subaruImg from "./images/subaru-wrx.jpg";
 import volvoImg from "./images/volvo-xc90.jpg";
 
-// Асинхронна дія для завантаження автомобілів з API
-export const fetchCars = createAsyncThunk(
-    'cars/fetchCars',
-    async (_, { rejectWithValue }) => {
+// Асинхронна дія для завантаження брендів автомобілів з API Dadata
+export const fetchCarBrands = createAsyncThunk(
+    'cars/fetchCarBrands',
+    async (query, { rejectWithValue }) => {
         try {
-            const response = await axios.get('https://api.example.com/cars');
-            return response.data; // Дані з API
+            const response = await axios.post('https://dadata.ru/api/suggest/car_brand/',
+                { query },
+                {
+                    headers: {
+                        'Authorization': `4de23b2d8b1bfa2545cc1e3c86cd6e73ddba4115`,  // Замініть на ваш API ключ
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            return response.data.suggestions;  // Повертаємо отримані бренди
         } catch (error) {
             return rejectWithValue(error.response?.data || error.message);
         }
@@ -148,6 +155,7 @@ const initialState = {
     ],
     isLoading: false,
     error: null,
+    carBrands: []  // Сюди будемо зберігати бренди автомобілів з Dadata
 };
 
 // Слайс
@@ -173,17 +181,17 @@ const carsSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchCars.pending, (state) => {
+            .addCase(fetchCarBrands.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(fetchCars.fulfilled, (state, action) => {
+            .addCase(fetchCarBrands.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.list = action.payload;
+                state.carBrands = action.payload;
             })
-            .addCase(fetchCars.rejected, (state, action) => {
+            .addCase(fetchCarBrands.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload || 'Не вдалося завантажити дані';
+                state.error = action.payload || 'Не вдалося завантажити бренди автомобілів';
             });
     },
 });
@@ -191,6 +199,7 @@ const carsSlice = createSlice({
 // Експортуємо дії та редюсер
 export const { addCar, removeCar, updateCar } = carsSlice.actions;
 export const selectCars = (state) => state.cars.list;
+export const selectCarBrands = (state) => state.cars.carBrands;  // Вибірка брендів автомобілів
 export const selectIsLoading = (state) => state.cars.isLoading;
 export const selectError = (state) => state.cars.error;
 

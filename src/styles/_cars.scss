@@ -29,7 +29,7 @@
     height: auto;
     border-radius: 8px;
     opacity: 0; // Сховати поки завантажується
-    @include transition(opacity 0.5s); // Анімація появи
+    @include transition(opacity 0.5s ease-in-out); // Анімація появи
   }
 
   img.loaded {

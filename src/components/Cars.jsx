@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import CarCard from './CarCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCars } from '../redux/slices/carsSlice';
+import { fetchCarBrands } from '../redux/slices/carsSlice';
 
 const Cars = () => {
     const dispatch = useDispatch();
     const { list: cars, isLoading, error } = useSelector((state) => state.cars);
 
     useEffect(() => {
-        dispatch(fetchCars());
+        dispatch(fetchCarBrands());
     }, [dispatch]);
 
     return (
